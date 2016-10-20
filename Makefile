@@ -1,12 +1,12 @@
-bin/%.o: src/%.c
+package/bin/app: package/src/app.c package/bin/display.o
+	$(CC) $(CFLAGS) $< package/bin/display.o -o $@
+
+package/bin/%.o: package/src/%.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
-bin/app: src/app.c bin/display.o
-	$(CC) $(CFLAGS) $< bin/display.o -o $@
-
-app:	bin/app
+app:	package/bin/app
 
 image:
 	. ./poky-krogoth/oe-init-build-env bbb/build/ && bitbake trebletrouble-image
 
-all:	image
+all:	app image
