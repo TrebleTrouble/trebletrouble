@@ -44,10 +44,11 @@ do_install() {
 
 EOF
 
-        for n in ${SYSVINIT_ENABLED_GETTYS}
-        do
-            echo "$n:12345:respawn:${base_sbindir}/getty 38400 tty$n" >> ${D}${sysconfdir}/inittab
-        done
+        # for n in ${SYSVINIT_ENABLED_GETTYS}
+        # do
+        #     echo "$n:12345:respawn:${base_sbindir}/getty 38400 tty$n" >> ${D}${sysconfdir}/inittab
+        # done
+	echo "1:12345:respawn:${SYSVINIT_COMMAND}" >> ${D}${sysconfdir}/inittab
         echo "" >> ${D}${sysconfdir}/inittab
     fi
 }
@@ -82,6 +83,6 @@ CONFFILES_${PN} = "${sysconfdir}/inittab"
 
 USE_VT ?= "1"
 SYSVINIT_ENABLED_GETTYS ?= "1"
-
+SYSVINIT_COMMAND = "/usr/bin/tspress -platform linuxfb -plugin evdevtouch"
 
 
