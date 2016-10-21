@@ -39,12 +39,7 @@ int display(void) {
 
 	memset(fbp, 0x00, screensize);
 	for (i = 0; i < screensize; i++) {
-		if (i%4 == 0)
-			memset(fbp + i, 0x26, 1);
-		if (i%4 == 1)
-			memset(fbp + i, 0x45, 1);
-		if (i%4 == 2)
-			memset(fbp + i, 0xdf, 1);
+		memset(fbp + i, 0x3C, 1);
 	}
 
 	// fuck it, loop forever
