@@ -38,8 +38,17 @@ int display(void) {
 	}
 
 	memset(fbp, 0x00, screensize);
-	for (i = 0; i < screensize; i++) {
-		memset(fbp + i, 0x3C, 1);
+	for (i = 0; i < screensize; i += 2) {
+		/*
+		 * So, we have 16-bits per pixel. It is split up into 
+		 * 5 bits for Red, 6 bits for Green and 5 bits for Blue
+		 * Why 6 bits for Green? Human biology, that's why.
+		 * The least significant _byte_ is first and the most 
+		 * significant byte is second. Byte order is always the same.
+		 * 0x25E2 is actually the colour E225 which is orange.
+		 * Red - 1110 0; Green - 010 001; Blue - 0 0101)
+		 */
+		memset(fbp + i, 0x25E2, 2);
 	}
 
 	// fuck it, loop forever
