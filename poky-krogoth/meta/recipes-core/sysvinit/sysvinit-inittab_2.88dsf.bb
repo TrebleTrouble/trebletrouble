@@ -83,6 +83,6 @@ CONFFILES_${PN} = "${sysconfdir}/inittab"
 
 USE_VT ?= "1"
 SYSVINIT_ENABLED_GETTYS ?= "1"
-SYSVINIT_COMMAND = "/usr/bin/tspress -platform linuxfb -plugin evdevtouch"
+SYSVINIT_COMMAND = "/usr/bin/trebletrouble"
 
 

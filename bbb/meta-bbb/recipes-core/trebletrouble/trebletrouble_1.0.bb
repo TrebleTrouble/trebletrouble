@@ -11,7 +11,11 @@ PR = "0"
 S = "${WORKDIR}"
 
 do_compile() {
-    mkdir bin && make trebletrouble
+    if [ -d bin ]; then
+        make trebletrouble
+    else
+        mkdir bin && make trebletrouble
+    fi
 }
 
 do_install() {

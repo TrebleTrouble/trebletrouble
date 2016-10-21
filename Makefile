@@ -7,6 +7,6 @@ package/bin/%.o: package/src/%.c
 app:	package/bin/app
 
 image:
-	. ./poky-krogoth/oe-init-build-env bbb/build/ && bitbake trebletrouble-image
+	. ./poky-krogoth/oe-init-build-env bbb/build/ && bitbake -f -c fetch trebletrouble && bitbake -f -c compile trebletrouble && bitbake trebletrouble-image
 
 all:	app image
