@@ -7,5 +7,4 @@ bin/trebletrouble: src/app.c bin/display.o
 trebletrouble:	bin/trebletrouble
 
 clean:
-	rm bin/*
-	rmdir bin
+	./scripts/clean.sh
