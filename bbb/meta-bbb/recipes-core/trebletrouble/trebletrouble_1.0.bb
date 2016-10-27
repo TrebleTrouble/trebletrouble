@@ -6,6 +6,7 @@ SRC_URI = "file://LICENSE \
 	   file://Makefile \
 	   file://scripts/* \
 	   file://src/* \
+	   file://share/* \
 	  "
 
 PR = "0"
@@ -22,6 +23,9 @@ do_compile() {
 do_install() {
     install -d ${D}${bindir}
     install -m 0755 bin/trebletrouble ${D}${bindir}
+    install -d ${D}${servicedir}/trebletrouble
+    install -m 0644 share/* ${D}${servicedir}/trebletrouble/
 }
 
-FILES_${PN} = "${bindir}"
+FILES_${PN} = "${bindir} \
+	       ${servicedir}/trebletrouble"
