@@ -19,8 +19,10 @@ int bitblit(char* filename, char* fbp, int x, int y) {
 	if (fd == NULL)
 		return -1;
 	fread(buf, 1, 3, fd);
-	if (buf[0] != 'P' || buf[1] != '6')
+	if (buf[0] != 'P' || buf[1] != '6') {
+		fclose(fd);
 		return -2;
+	}
 	fread(buf, 1, 3, fd);
 	w = 0;
 	for (i = 0; i < 3; i++) {
@@ -71,6 +73,7 @@ int bitblit(char* filename, char* fbp, int x, int y) {
 		memset(fbp + 2*i, *(short*)px, 2);
 	}
 
+	fclose(fd);
 	return 0;
 }
 
