@@ -8,8 +8,9 @@
 #include <sys/mman.h>
 
 int DISP_WIDTH = 1;
+long SCREENSIZE;
 
-int bitblit(char* filename, char* fbp, int screensize, int x, int y) { /*, int w, int h) {*/
+int bitblit(char* filename, char* fbp, int x, int y) {
 	FILE* fd;
 	int i, j, w, h;
 	unsigned char buf[3], px[2];
@@ -52,7 +53,8 @@ int bitblit(char* filename, char* fbp, int screensize, int x, int y) { /*, int w
 	do {
 		buf[0] = fgetc(fd);
 	} while (buf[0] != ' ' && (buf[0] < 9 || 13 < buf[0]));
-	for (i = 0; i < screensize/2; i++) {
+
+	for (i = 0; i < SCREENSIZE/2; i++) {
 		if ((i / DISP_WIDTH) < y)
 			continue;
 		if ((i % DISP_WIDTH) < x || (x+w) < (i % DISP_WIDTH))
@@ -72,39 +74,38 @@ int bitblit(char* filename, char* fbp, int screensize, int x, int y) { /*, int w
 	return 0;
 }
 
-int display(void) {
-	int fbfd, i, xpos, err;
+char *init_display(int *fbfd) {
+	int i, xpos, err;
 	struct fb_var_screeninfo vinfo;
 	struct fb_fix_screeninfo finfo;
-	long screensize;
 	char* fbp;
 
-	fbfd = open("/dev/fb0", O_RDWR);
-	if (fbfd == -1) {
+	*fbfd = open("/dev/fb0", O_RDWR);
+	if (*fbfd == -1) {
 		printf("Error: cannot open framebuffer.\n");
 		return 1;
 	}
 
-	if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo)) {
+	if (ioctl(*fbfd, FBIOGET_VSCREENINFO, &vinfo)) {
 		printf("Error reading variable screen info\n");
 	}
 
-	if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo)) {
+	if (ioctl(*fbfd, FBIOGET_FSCREENINFO, &finfo)) {
 		printf("Error reading fixed screen info\n");
 	}
 
 	DISP_WIDTH = vinfo.xres;
-	screensize = finfo.smem_len;
+	SCREENSIZE = finfo.smem_len;
 
-	fbp = (char*)mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, 
-			  fbfd, 0);
+	fbp = (char*)mmap(0, SCREENSIZE, PROT_READ | PROT_WRITE, MAP_SHARED,
+			  *fbfd, 0);
 	if ((long)fbp == -1) {
 		printf("Mmap of screen failed.\n");
 		return 1;
 	}
 
-	memset(fbp, 0x00, screensize);
-	for (i = 0; i < screensize/2; i++) {
+	memset(fbp, 0x00, SCREENSIZE);
+	for (i = 0; i < SCREENSIZE/2; i++) {
 		/*
 		 * So, we have 16-bits per pixel. It is split up into 
 		 * 5 bits for Red, 6 bits for Green and 5 bits for Blue
@@ -116,22 +117,10 @@ int display(void) {
 		 */
 		memset(fbp + 2*i, 0x25E2, 2);
 	}
+	return fbp;
+}
 
-	err = bitblit("/srv/trebletrouble/timbit.pnm", fbp, screensize, 400, 240);
-
-	if (err) {
-		if (err == -1) {
-			printf("File not found :(");
-		} else if (err == -2) {
-			printf("Not P6 file");
-		}
-	}
-
-	/* fuck it, loop forever */
-	while(1);
-
-	munmap(fbp, screensize);
-	close(fbfd);
-
-	return 0;
+void cleanup_display(char* fbp, int *fbfd) {
+	munmap(fbp, SCREENSIZE);
+	close(*fbfd);
 }
