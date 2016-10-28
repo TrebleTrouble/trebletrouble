@@ -28,6 +28,7 @@ int bitblit(char* filename, char* fbp, int screensize, int x, int y) { /*, int w
 		w *= 10;
 		w += buf[i] - '0';
 	}
+	w--;
 	if (i == 3) {
 		/* throw away whitespace */
 		fread(buf, 1, 1, fd);
@@ -44,6 +45,7 @@ int bitblit(char* filename, char* fbp, int screensize, int x, int y) { /*, int w
 		h *= 10;
 		h += buf[i] - '0';
 	}
+	h--;
 	if (i == 3) {
 		buf[0] = fgetc(fd);
 	}
@@ -51,13 +53,17 @@ int bitblit(char* filename, char* fbp, int screensize, int x, int y) { /*, int w
 		buf[0] = fgetc(fd);
 	} while (buf[0] != ' ' && (buf[0] < 9 || 13 < buf[0]));
 	for (i = 0; i < screensize/2; i++) {
-		if ((i / DISP_WIDTH) < y || (y+h) < (i / DISP_WIDTH))
+		if ((i / DISP_WIDTH) < y)
 			continue;
 		if ((i % DISP_WIDTH) < x || (x+w) < (i % DISP_WIDTH))
 			continue;
+		if ((y+h) < (i / DISP_WIDTH))
+			break;
 		if (fread(buf, 1, 3, fd) != 3) {
 			break;
 		}
+		if (buf[0] == 0xFF && buf[1] == 0xFF && buf[2] == 0xFF)
+			continue;
 		px[0] = (buf[0] & 0xF8) | ((buf[1] & 0xE0) >> 5);
 		px[1] = ((buf[1] & 0x1C) << 3) | ((buf[2] & 0xF8) >> 3);
 		memset(fbp + 2*i, *(short*)px, 2);
@@ -98,7 +104,7 @@ int display(void) {
 	}
 
 	memset(fbp, 0x00, screensize);
-	for (i = 0; i < screensize; i += 2) {
+	for (i = 0; i < screensize/2; i++) {
 		/*
 		 * So, we have 16-bits per pixel. It is split up into 
 		 * 5 bits for Red, 6 bits for Green and 5 bits for Blue
@@ -108,10 +114,10 @@ int display(void) {
 		 * 0x25E2 is actually the colour E225 which is orange.
 		 * Red - 1110 0; Green - 010 001; Blue - 0 0101)
 		 */
-		memset(fbp + i, 0x25E2, 2);
+		memset(fbp + 2*i, 0x25E2, 2);
 	}
 
-	err = bitblit("/srv/trebletrouble/timbit.pnm", fbp, screensize, 200, 120);
+	err = bitblit("/srv/trebletrouble/timbit.pnm", fbp, screensize, 400, 240);
 
 	if (err) {
 		if (err == -1) {
@@ -121,7 +127,7 @@ int display(void) {
 		}
 	}
 
-	// fuck it, loop forever
+	/* fuck it, loop forever */
 	while(1);
 
 	munmap(fbp, screensize);
