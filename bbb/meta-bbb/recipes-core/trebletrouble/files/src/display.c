@@ -86,7 +86,7 @@ char *init_display(int *fbfd) {
 	*fbfd = open("/dev/fb0", O_RDWR);
 	if (*fbfd == -1) {
 		printf("Error: cannot open framebuffer.\n");
-		return 1;
+		return NULL;
 	}
 
 	if (ioctl(*fbfd, FBIOGET_VSCREENINFO, &vinfo)) {
@@ -104,7 +104,7 @@ char *init_display(int *fbfd) {
 			  *fbfd, 0);
 	if ((long)fbp == -1) {
 		printf("Mmap of screen failed.\n");
-		return 1;
+		return NULL;
 	}
 
 	memset(fbp, 0x00, SCREENSIZE);
