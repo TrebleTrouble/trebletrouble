@@ -18,6 +18,47 @@ char *NOTE[12] = {"/srv/trebletrouble/A.pnm", "/srv/trebletrouble/As.pnm", "/srv
 
 char *OCTAVE[9] = {"/srv/trebletrouble/0.pnm", "/srv/trebletrouble/1.pnm", "/srv/trebletrouble/2.pnm", "/srv/trebletrouble/3.pnm", "/srv/trebletrouble/4.pnm", "/srv/trebletrouble/5.pnm", "/srv/trebletrouble/6.pnm", "/srv/trebletrouble/7.pnm", "/srv/trebletrouble/8.pnm"};
 
+/* Internal functions */
+
+void orange_screen(char* fbp) {
+	int i;
+
+	for (i = 0; i < SCREENSIZE/2; i++) {
+		/*
+		 * So, we have 16-bits per pixel. It is split up into 
+		 * 5 bits for Red, 6 bits for Green and 5 bits for Blue
+		 * Why 6 bits for Green? Human biology, that's why.
+		 * The least significant _byte_ is first and the most 
+		 * significant byte is second. Byte order is always the same.
+		 * 0x25E2 is actually the colour E225 which is orange.
+		 * Red - 1110 0; Green - 010 001; Blue - 0 0101)
+		 */
+		memset(fbp + 2*i, 0x25E2, 2);
+	}
+}
+
+int find_freq_recur(double freq, int i, int len) {
+	while (1) {
+		if (FREQS[i] <= freq) {
+			if (freq <= FREQS[i+1]) {
+				if ((freq - FREQS[i]) < (FREQS[i+1] - freq))
+					return i;
+				else
+					return i+1;
+			} else
+				i += (len%2 == 0 ? len/4 : len/4 + 1);
+		} else
+			i -= (len%2 == 0 ? len/4 : len/4 + 1);
+		len /= 2;
+	}
+}
+
+int find_freq(double freq) {
+	find_freq_recur(freq, KEYS / 2, KEYS);
+}
+
+/* External API */
+
 int bitblit(char* filename, char* fbp, int x, int y) {
 	FILE* fd;
 	int i, j, w, h;
@@ -85,31 +126,12 @@ int bitblit(char* filename, char* fbp, int x, int y) {
 	return 0;
 }
 
-int find_freq_recur(double freq, int i, int len) {
-	while (1) {
-		if (FREQS[i] <= freq) {
-			if (freq <= FREQS[i+1]) {
-				if ((freq - FREQS[i]) < (FREQS[i+1] - freq))
-					return i;
-				else
-					return i+1;
-			} else
-				i += len/4;
-		} else
-			i -= len/4;
-		len /= 2;
-	}
-}
-
-int find_freq(double freq) {
-	find_freq_recur(freq, KEYS / 2, KEYS);
-}
-
 void display_frequency(double frequency, char* fbp) {
 	int ind;
 	/* binary search for the index */
 	ind = find_freq(frequency);
 
+	orange_screen(fbp);
 	bitblit(NOTE[ind % 12], fbp, 60, 300);
 	bitblit(OCTAVE[(ind+10) / 12], fbp, 270, 300);
 }
@@ -145,18 +167,7 @@ char *init_display(int *fbfd) {
 	}
 
 	memset(fbp, 0x00, SCREENSIZE);
-	for (i = 0; i < SCREENSIZE/2; i++) {
-		/*
-		 * So, we have 16-bits per pixel. It is split up into 
-		 * 5 bits for Red, 6 bits for Green and 5 bits for Blue
-		 * Why 6 bits for Green? Human biology, that's why.
-		 * The least significant _byte_ is first and the most 
-		 * significant byte is second. Byte order is always the same.
-		 * 0x25E2 is actually the colour E225 which is orange.
-		 * Red - 1110 0; Green - 010 001; Blue - 0 0101)
-		 */
-		memset(fbp + 2*i, 0x25E2, 2);
-	}
+	orange_screen(fbp);
 	return fbp;
 }
 
