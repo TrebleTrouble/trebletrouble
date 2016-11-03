@@ -1,3 +1,5 @@
+CFLAGS="-Wall"
+
 bin/app: package/src/app.c bin/display.o
 	$(CC) $(CFLAGS) $< bin/display.o -o $@
 

@@ -1,3 +1,5 @@
+CFLAGS="-Wall"
+
 bin/%.o: src/%.c
 	$(CC) -c $(CFLAGS) $< -o $@
 

@@ -143,7 +143,6 @@ void display_frequency(double frequency, char* fbp) {
 }
 
 char *init_display(int *fbfd) {
-	int i, xpos, err;
 	struct fb_var_screeninfo vinfo;
 	struct fb_fix_screeninfo finfo;
 	char* fbp;
