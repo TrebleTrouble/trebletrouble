@@ -56,7 +56,11 @@ int find_freq_recur(double freq, int i, int len) {
 }
 
 int find_freq(double freq) {
-	find_freq_recur(freq, KEYS / 2, KEYS);
+	if (freq <= FREQS[0])
+		return 0;
+	if (FREQS[KEYS-1] <= freq)
+		return KEYS-1;
+	return find_freq_recur(freq, KEYS / 2, KEYS);
 }
 
 /* External API */
