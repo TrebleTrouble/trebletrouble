@@ -7,6 +7,8 @@
 #include <linux/fb.h>
 #include <sys/mman.h>
 
+#include "colours.h"
+
 int DISP_WIDTH = 1;
 long SCREENSIZE;
 
@@ -20,7 +22,7 @@ char *OCTAVE[9] = {"/srv/trebletrouble/0.pnm", "/srv/trebletrouble/1.pnm", "/srv
 
 /* Internal functions */
 
-void orange_screen(char* fbp) {
+void colour_screen(char* fbp, short colour) {
 	int i;
 
 	for (i = 0; i < SCREENSIZE/2; i++) {
@@ -33,7 +35,7 @@ void orange_screen(char* fbp) {
 		 * 0x25E2 is actually the colour E225 which is orange.
 		 * Red - 1110 0; Green - 010 001; Blue - 0 0101)
 		 */
-		memset(fbp + 2*i, 0x25E2, 2);
+		memset(fbp + 2*i, colour, 2);
 	}
 }
 
@@ -131,7 +133,7 @@ void display_frequency(double frequency, char* fbp) {
 	/* binary search for the index */
 	ind = find_freq(frequency);
 
-	orange_screen(fbp);
+	colour_screen(fbp, ORANGE);
 	bitblit(NOTE[ind % 12], fbp, 60, 300);
 	bitblit(OCTAVE[(ind+10) / 12], fbp, 270, 300);
 }
@@ -167,7 +169,7 @@ char *init_display(int *fbfd) {
 	}
 
 	memset(fbp, 0x00, SCREENSIZE);
-	orange_screen(fbp);
+	colour_screen(fbp, ORANGE);
 	return fbp;
 }
 
