@@ -1,21 +1,24 @@
 CFLAGS="-Wall"
 
 bin/app: package/src/app.c bin/display.o
-	$(CC) $(CFLAGS) $< bin/display.o -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 
 bin/%.o: package/src/%.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
 app:	bin/app
 
+trebletrouble:
+	. ./poky-krogoth/oe-init-build-env bbb/build/ && bitbake -f -c fetch trebletrouble && bitbake -f -c compile trebletrouble
+
 image:
-	. ./poky-krogoth/oe-init-build-env bbb/build/ && bitbake -f -c fetch trebletrouble && bitbake -f -c compile trebletrouble && bitbake trebletrouble-image
+	. ./poky-krogoth/oe-init-build-env bbb/build/ && bitbake trebletrouble-image
 
 install-srv:
 	./install-srv.sh
 
 install-bin:
-	./intall-bin.sh
+	./install-bin.sh
 
 sudo-format-sdcard:
 	sudo ./bbb/meta-bbb/scripts/mk2parts.sh sdb
