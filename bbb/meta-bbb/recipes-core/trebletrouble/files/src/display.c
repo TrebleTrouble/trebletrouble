@@ -67,7 +67,7 @@ int find_freq(double freq) {
 
 int bitblit(char* filename, char* fbp, int x, int y) {
 	FILE* fd;
-	int i, j, w, h;
+	int i, j, w, h, vw;
 	unsigned char buf[3], px[2];
 
 	fd = fopen(filename, "rb");
@@ -87,15 +87,16 @@ int bitblit(char* filename, char* fbp, int x, int y) {
 		w += buf[i] - '0';
 	}
 	w--;
+	j = 0;
 	if (i == 3) {
 		/* throw away whitespace */
 		fread(buf, 1, 1, fd);
 	} else if (i < 2) {
-		for (j = 0; j+i+1 < 3; i++) {
+		for (; j+i+1 < 3; j++) {
 			buf[j] = buf[j+i+1];
 		}
 	}
-	fread(buf, 1, 3, fd);
+	fread(buf+j, 1, 3-j, fd);
 	h = 0;
 	for (i = 0; i < 3; i++) {
 		if (buf[i] == ' ' || (9 < buf[i] && buf[i] < 13))
@@ -111,9 +112,12 @@ int bitblit(char* filename, char* fbp, int x, int y) {
 		buf[0] = fgetc(fd);
 	} while (buf[0] != ' ' && (buf[0] < 9 || 13 < buf[0]));
 
+	vw = (x+w) > 800 ? x+w-799 : 0;
 	for (i = 0; i < SCREENSIZE/2; i++) {
 		if ((i / DISP_WIDTH) < y)
 			continue;
+		if (vw && (i % DISP_WIDTH) == DISP_WIDTH-1)
+			fseek(fd, 3*vw, SEEK_CUR);
 		if ((i % DISP_WIDTH) < x || (x+w) < (i % DISP_WIDTH))
 			continue;
 		if ((y+h) < (i / DISP_WIDTH))
