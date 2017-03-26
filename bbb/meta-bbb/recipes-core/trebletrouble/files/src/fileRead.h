@@ -1,6 +1,7 @@
 #ifndef FILEREAD_H_
 #define FILEREAD_H_
 #include "fileFormat.h"
+
 /*Helper Methods*/
 
 /*use makeBin() to create TwinkleTwinkle.bin*/
