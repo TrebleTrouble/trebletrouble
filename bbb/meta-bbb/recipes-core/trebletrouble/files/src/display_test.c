@@ -35,7 +35,7 @@
 #include "fileRead.h"
 #include "display.h"
 
-#define TWINKLE "Twinkle-display-twice.bin"
+#define SONG "Twinkle-display-twice.bin"
 extern long SCREENSIZE;
 extern int DISP_WIDTH;
 
@@ -99,8 +99,8 @@ int main(int argc, char** argv){
 	Song * song;
 	ttls = malloc(sizeof(song));
 	Note * notes;
-	makeBin(TWINKLE);
-	notes = readTwinkle(song,TWINKLE);
+	makeBin(SONG);
+	notes = readTwinkle(song,SONG);
 
 	load_song(fbp, notes, song);
 
