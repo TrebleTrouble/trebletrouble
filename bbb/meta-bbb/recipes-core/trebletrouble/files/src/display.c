@@ -496,7 +496,7 @@ Bar* find_worst_bar(Song* song, int* actuals) {
 
 }
 	
-void clear_notes(int i, int *expected, int *actual, char* fbp, int len, int value) {
+/*void clear_notes(int i, int *expected, int *actual, char* fbp, int len, int value) {
 	int actual_ynote;
 	for (; i < len; i++) {
 		actual_ynote = get_ynote(actual[i]);
@@ -504,7 +504,7 @@ void clear_notes(int i, int *expected, int *actual, char* fbp, int len, int valu
 		if (!(actual_ynote%30))
 			bitblit(L_PIC, fbp, get_xnote(i)-3, get_ynote(actual[i])-14);
 		draw_note(i, get_ynote(expected[i]), fbp, BLACK, value);
-	}
+	}*/
 
 void clear_all_notes(Song* song, Note* note, int* actuals, char* fbp){
 	int actual_ynote, i, j, time;
@@ -537,7 +537,7 @@ void clear_all_notes(Song* song, Note* note, int* actuals, char* fbp){
 
 }
 
-void load_start_song(char *fbp, Song * song){
+int load_start_song(char *fbp, Song * song){
 	/*Time signature:
 	Timesig = Ts1-1 * 16 + Ts2-1
 	so for 4/4= 51
@@ -554,9 +554,10 @@ void load_start_song(char *fbp, Song * song){
 	int ts1 = (song->sfh->timeSignature/16)+1;
 	int ts2 = (song->sfh->timeSignature%16)+1;
 	set_time_signature(ts1, ts2, fbp);
+	return x_start;
 }
 /*loads a partial part of the song, given the 4 bars at a time.*/
-void load_song(char *fbp, Note * notes, Song * song){
+void load_song(char *fbp, Note * notes, Song * song, int x_s){
 	int i, j, ynote, time, note;
 	double freq;
 	Bar* fbar;
@@ -564,6 +565,7 @@ void load_song(char *fbp, Note * notes, Song * song){
 
 	BARSP = 0;
 	NOTESP = 0;
+	x_start = x_s;
 
 	for(j = 0, i=0; j < song->sfh->numNotes; j++){
 		

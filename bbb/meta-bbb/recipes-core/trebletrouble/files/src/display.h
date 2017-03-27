@@ -6,7 +6,7 @@
 
 #define NOTE_PIC "/srv/trebletrouble/note.pnm"
 #define L_PIC "/srv/trebletrouble/note_l.pnm"
-#define SONG "/srv/trebletrouble/testnotes"
+/*#define SONG "/srv/trebletrouble/testnotes"*/
 #define FLAT "/srv/trebletrouble/flat.pnm"
 #define SHARP "/srv/trebletrouble/sharp.pnm" 
 #define BAR "/srv/trebletrouble/bar.pnm"
@@ -78,10 +78,10 @@ void colour_screen(char* fbp, short colour);
 
 void draw_staff(char* fbp);
 int compare_notes(Song* song, Note* note, int* actuals, int i, int j, char* fbp, int barspace);
-void clear_notes(int i, int *expected, int *actual, char* fbp, int len, int value);
+/*void clear_notes(int i, int *expected, int *actual, char* fbp, int len, int value);*/
 void clear_all_notes(Song* song, Note* note, int* actuals, char* fbp);
-void load_start_song(char *fbp, Song * song);
-void load_song(char *fbp, Note * notes, Song * song);
+int load_start_song(char *fbp, Song * song);
+void load_song(char *fbp, Note * notes, Song * song, int x_s);
 
 Bar* find_worst_bar(Song* song, int* actuals);
 

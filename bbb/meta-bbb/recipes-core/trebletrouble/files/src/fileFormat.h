@@ -8,7 +8,7 @@
 #define SEMIQUAVER      2
 #define DEMISEMIQUAVER  1
 
-#define TWINKLE_FILENAME "TwinkleTwinkle.bin"
+#define TWINKLE_FILENAME "TwinkleTwinkle-display-twice.bin"
 #define C_FLAT_MAJ  0b01111111
 #define A_FLAT_MIN  0b01111111
 #define G_FLAT_MAJ  0b01111110

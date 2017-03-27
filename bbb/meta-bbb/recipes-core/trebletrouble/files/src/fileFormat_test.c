@@ -12,8 +12,8 @@ int main(int argc, char** argv)
 	Note * notes;
 	makeBin(TWINKLE_FILENAME);
 	notes=readTwinkle(ttls,TWINKLE_FILENAME);
-	printHeader(ttls);
-	printNote(notes);
+	//printHeader(ttls);
+	//printNote(notes);
 	//parseBar(&ttls,notes);
 	freeSong(ttls);
 	return 1;

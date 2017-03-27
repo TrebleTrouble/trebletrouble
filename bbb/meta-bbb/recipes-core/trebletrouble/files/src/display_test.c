@@ -35,7 +35,7 @@
 #include "fileRead.h"
 #include "display.h"
 
-#define TWINKLE "Twinkle-display-twice.bin"
+#define SONG "TwinkleTwinkle-display-twice.bin"
 extern long SCREENSIZE;
 extern int DISP_WIDTH;
 
@@ -81,7 +81,7 @@ void screen_capture(char* fbp, char* filename){
 }
 
 int main(int argc, char** argv){
-
+	int i, j;
 	/*set screensize and display_width for testing*/
 	SCREENSIZE = 800*480*2;
 	DISP_WIDTH = 800;
@@ -97,29 +97,29 @@ int main(int argc, char** argv){
 	/*Testing code for Winter
 	Testing the new Song format*/
 	Song * song;
-	ttls = malloc(sizeof(song));
+	song = malloc(sizeof(song);
+	printf("DISPLAY_TEST: size of song: %d\n", sizeof(song));
 	Note * notes;
-	makeBin(TWINKLE);
-	notes = readTwinkle(song,TWINKLE);
-
-	load_song(fbp, notes, song);
-
-	clear_all_notes(song, notes, song->expected, fbp);
-	/*for(i=0, j=0; i < song->sfh->numNotes; i++, j++){
+	makeBin(SONG);
+	printf("PRINTING OUT %s\n", SONG);
+	notes = readTwinkle(song,SONG);
+	Bar* fbar;
+	fbar = song->fbar;
+	printf("PRINTING OUT numBars%d\n", song->sfh->numBars);
+	int x_s = load_start_song(fbp, song);
+	printf("NUMNOTES: %d\n", song->sfh->numNotes);
+	/*for loop to give the first  bars, then continue until done*/
+	/* i is the current note, j is the current bar*/
+	for(i=0, j=0; i < song->sfh->numNotes;i++, j++){
 		if (j == fbar->notes){
 			fbar++;
 			j = 0;
+			printf("fbar++\n");
 		}
+		printf("i = %d\n",i);
+		//load song every 4 bars
+	}
 
-		actuals = song->expected;
-		
-		k= clear_notes(song, notes+i, actuals, i,j, fbp, fbar->barspace);
-		j -=k;
-		i -=k;
-
-		song->expected++;
-		
-	}*/	
 	/*writes the thing to a pnm hopefully --update: it does*/
 	screen_capture(fbp, "screenshot.pnm");
 	

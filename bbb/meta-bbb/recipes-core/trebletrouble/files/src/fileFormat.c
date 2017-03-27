@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "fileFormat.h"
 
-#define NUMBAR = 8;
-#define NUMNOTES = 28;
+#define NUMBAR 8
+#define NUMNOTES 28
 
 void makeBin(char * filename)
 {
@@ -13,7 +13,6 @@ void makeBin(char * filename)
 	//4 bars of twinkle twinkle 
 	Bar allBars[NUMBAR];
 	Note allNotes [NUMNOTES];
-	
 	i=0;
 	j=0;
 	//Fist Bar
@@ -22,44 +21,51 @@ void makeBin(char * filename)
         allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
         allNotes[i].dotted = 0; 
 	i++;
-        
+        printf("ADDING NEW NOTE %d\n", i);	
+
         allNotes[i].quantumvalue = CROTCHET; 
         allNotes[i].frequency =261.626; 
         allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
         allNotes[i].dotted = 0; 
 	i++;
-                	
+         printf("ADDING NEW NOTE %d\n", i);	
+       	
         allNotes[i].quantumvalue = CROTCHET; 
         allNotes[i].frequency =392.628; 
         allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
-                	
+          printf("ADDING NEW NOTE %d\n", i);	
+      	
         allNotes[i].quantumvalue = CROTCHET; 
         allNotes[i].frequency =392.628; 
         allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
         allNotes[i].dotted = 0; 
 	i++;
-        	
+        	printf("ADDING NEW NOTE %d\n", i);	
+
 	//Second Bar
 	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =440.0; 
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
-        
+        printf("ADDING NEW NOTE %d\n", i);	
+
 	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =440.0; 
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
-        
+        printf("ADDING NEW NOTE %d\n", i);	
+
 	allNotes[i].quantumvalue = MINIM; 
 	allNotes[i].frequency =415.305; 
 	allNotes[i].duration = millisec(sfh.bpm, ts, MINIM);
 	allNotes[i].dotted = 0; 
 	i++;
-	
+	printf("ADDING NEW NOTE %d\n", i);	
+
 	//Third Bar
 
 	allNotes[i].quantumvalue = CROTCHET; 
@@ -67,25 +73,29 @@ void makeBin(char * filename)
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
-        
+        printf("ADDING NEW NOTE %d\n", i);	
+
        	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =349.228; 
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
-        
-	allNotes[i].quantumvalue = CROTCHET; 
-	allNotes[i].frequency =329.628; 
-	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
-	allNotes[i].dotted = 0; 
-	i++;
+        printf("ADDING NEW NOTE %d\n", i);	
 
 	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =329.628; 
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
-	
+printf("ADDING NEW NOTE %d\n", i);	
+
+	allNotes[i].quantumvalue = CROTCHET; 
+	allNotes[i].frequency =329.628; 
+	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
+	allNotes[i].dotted = 0; 
+	i++;
+	printf("ADDING NEW NOTE %d\n", i);	
+
 	//Fourth Bar
 	
 	allNotes[i].quantumvalue = CROTCHET; 
@@ -93,18 +103,21 @@ void makeBin(char * filename)
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
-		
+		printf("ADDING NEW NOTE %d\n", i);	
+
 	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =293.665; 
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
+printf("ADDING NEW NOTE %d\n", i);	
 
 	allNotes[i].quantumvalue = MINIM; 
 	allNotes[i].frequency =261.626; 
 	allNotes[i].duration = millisec(sfh.bpm, ts, MINIM);
 	allNotes[i].dotted = 0; 
 	i++;
+printf("ADDING NEW NOTE %d\n", i);	
 
 	//Fifth Bar - start over
 	allNotes[i].quantumvalue = CROTCHET; 
@@ -112,12 +125,14 @@ void makeBin(char * filename)
     allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
-                	
+ printf("ADDING NEW NOTE %d\n", i);	
+               	
     allNotes[i].quantumvalue = CROTCHET; 
     allNotes[i].frequency =392.628; 
     allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
     allNotes[i].dotted = 0; 
 	i++;
+printf("ADDING NEW NOTE %d\n", i);	
 
 
 	allNotes[i].quantumvalue = CROTCHET; 
@@ -125,13 +140,15 @@ void makeBin(char * filename)
     allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
     allNotes[i].dotted = 0; 
 	i++;
-        
+        printf("ADDING NEW NOTE %d\n", i);	
+
     allNotes[i].quantumvalue = CROTCHET; 
     allNotes[i].frequency =261.626; 
     allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
     allNotes[i].dotted = 0; 
 	i++;
-                	
+         printf("ADDING NEW NOTE %d\n", i);	
+       	
 
         	
 	//Sixth Bar
@@ -140,19 +157,22 @@ void makeBin(char * filename)
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
-        
+        printf("ADDING NEW NOTE %d\n", i);	
+
 	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =440.0; 
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
-        
+        printf("ADDING NEW NOTE %d\n", i);	
+
 	allNotes[i].quantumvalue = MINIM; 
 	allNotes[i].frequency =415.305; 
 	allNotes[i].duration = millisec(sfh.bpm, ts, MINIM);
 	allNotes[i].dotted = 0; 
 	i++;
-	
+	printf("ADDING NEW NOTE %d\n", i);	
+
 	//Seventh Bar
 
 	allNotes[i].quantumvalue = CROTCHET; 
@@ -160,25 +180,29 @@ void makeBin(char * filename)
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
-        
+        printf("ADDING NEW NOTE %d\n", i);	
+
        	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =349.228; 
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
-        
-	allNotes[i].quantumvalue = CROTCHET; 
-	allNotes[i].frequency =329.628; 
-	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
-	allNotes[i].dotted = 0; 
-	i++;
+        printf("ADDING NEW NOTE %d\n", i);	
 
 	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =329.628; 
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
-	
+printf("ADDING NEW NOTE %d\n", i);	
+
+	allNotes[i].quantumvalue = CROTCHET; 
+	allNotes[i].frequency =329.628; 
+	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
+	allNotes[i].dotted = 0; 
+	i++;
+	printf("ADDING NEW NOTE %d\n", i);	
+
 	//Eighth Bar
 	
 	allNotes[i].quantumvalue = CROTCHET; 
@@ -186,52 +210,63 @@ void makeBin(char * filename)
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
-		
+		printf("ADDING NEW NOTE %d\n", i);	
+
 	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =293.665; 
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
+printf("ADDING NEW NOTE %d\n", i);	
 
 	allNotes[i].quantumvalue = MINIM; 
 	allNotes[i].frequency =261.626; 
 	allNotes[i].duration = millisec(sfh.bpm, ts, MINIM);
 	allNotes[i].dotted = 0; 
 	i++;
-	
+	printf("ADDING NEW NOTE %d\n", i);	
+
 	//Keep the starting point of each note stored in a bar	
 	
 	
 
 	allBars[j].notes =4;
 	j++;
-	
+	printf("ADDING NEW BAR %d\n", j);
+
 
 	allBars[j].notes =3;
 	j++;
+	printf("ADDING NEW BAR %d\n", j);
 
 
 	allBars[j].notes =4;
 	j++;
+	printf("ADDING NEW BAR %d\n", j);
 
 
 	allBars[j].notes =3;
-	j++
+	j++;
+	printf("ADDING NEW BAR %d\n", j);
 
 	allBars[j].notes =4;
 	j++;
-	
+		printf("ADDING NEW BAR %d\n", j);
+
 
 	allBars[j].notes =3;
 	j++;
+	printf("ADDING NEW BAR %d\n", j);
 
 
 	allBars[j].notes =4;
 	j++;
+	printf("ADDING NEW BAR %d\n", j);
 
 
 	allBars[j].notes =3;
-	
+		printf("ADDING NEW BAR %d\n", j);
+
 	
 	/* Create the file */
 	FILE *fh = fopen (filename, "wb+");

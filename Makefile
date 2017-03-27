@@ -3,7 +3,7 @@ SD=sdb
 
 LIBS=-lc -lasound -lsndfile -lm
 
-bin/app: package/src/app.c bin/display.o bin/alsa.o bin/metronome.o bin/input.o bin/menu.o bin/tone.o bin/libfft.o bin/gdisplay.o bin/fileFormat.o bin/fileRead.o
+bin/app: package/src/app.c bin/display.o bin/alsa.o bin/metronome.o bin/input.o bin/menu.o bin/tone.o bin/libfft.o bin/gdisplay.o bin/fileFormat.o bin/fileRead.o 
 	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
 
 bin/%.o: package/src/%.c
@@ -43,10 +43,10 @@ bin/record_test: package/src/record_test.c bin/tone.o bin/libfft.o bin/alsa.o
 
 display_test: bin/display_test
 
-bin/format_test: package/src/fileFormat_test.c bin/fileFormat.o bin/fileRead.o
+bin/format_test: package/src/fileFormat_test.c bin/fileFormat.o bin/fileRead.o bin/display.o bin/gdisplay.o bin/fileFormat.o bin/fileRead.o
 	$(CC) $(CFLAGS) $^ -o $@
 
-fileFormat_test: bin/format_test
+fileFormat_test: bin/format_test bin/display_test
 
 tone_test: bin/tone_test
 

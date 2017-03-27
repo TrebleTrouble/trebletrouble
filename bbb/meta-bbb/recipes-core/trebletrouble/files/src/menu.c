@@ -65,7 +65,7 @@ void play_song_menu(char* fbp, ScreenInput *si)
 	makeBin(TWINKLE);
 	notes = readTwinkle(song, TWINKLE);
 	/*fclose(songfile);*/
-	load_song(fbp, notes, song);
+	///load_song(fbp, notes, song);
 
 	fbar = song->fbar;
 	pcmh = init_pcm(SAMPLE_RATE);

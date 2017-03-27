@@ -8,6 +8,7 @@
    returns the first note of the Song 
    THIS METHOD MUST BE CALLED IN ORDER TO PARSE THE SONG TWINKLE TWINKLE
 */
+#include "display.h"
 Note * readTwinkle(Song *ttls, char * filename);
 
 /*Will print out all of the bars as well as notes*/
