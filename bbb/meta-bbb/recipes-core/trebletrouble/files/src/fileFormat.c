@@ -9,7 +9,7 @@ void makeBin(char * filename)
 	int i;
 	int j;
 	unsigned char ts = 51;
-	SongFormatHeader sfh = {100,4,14,C_MAJ,ts,"twinkle twinkle little star"};
+	SongFormatHeader sfh = {100,NUMBAR, NUMNOTES,C_MAJ,ts,"twinkle twinkle little star"};
 	//4 bars of twinkle twinkle 
 	Bar allBars[NUMBAR];
 	Note allNotes [NUMNOTES];
