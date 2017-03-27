@@ -81,7 +81,7 @@ void screen_capture(char* fbp, char* filename){
 }
 
 int main(int argc, char** argv){
-	int i, j;
+	int i, j, k;
 	/*set screensize and display_width for testing*/
 	SCREENSIZE = 800*480*2;
 	DISP_WIDTH = 800;
@@ -89,7 +89,7 @@ int main(int argc, char** argv){
 	char* fbp = malloc(SCREENSIZE);
 
 	/*draw colour to screen*/
-	colour_screen(fbp, WHITE);	
+	colour_screen(fbp, WHITE);
 	
 	/*draw staff on screen*/
 	draw_staff(fbp);	
@@ -97,27 +97,29 @@ int main(int argc, char** argv){
 	/*Testing code for Winter
 	Testing the new Song format*/
 	Song * song;
-	song = malloc(sizeof(song);
-	printf("DISPLAY_TEST: size of song: %d\n", sizeof(song));
+	song = malloc(sizeof(song));
 	Note * notes;
+	
 	makeBin(SONG);
-	printf("PRINTING OUT %s\n", SONG);
 	notes = readTwinkle(song,SONG);
-	Bar* fbar;
+	Bar* fbar, * fbar_n;
 	fbar = song->fbar;
-	printf("PRINTING OUT numBars%d\n", song->sfh->numBars);
 	int x_s = load_start_song(fbp, song);
-	printf("NUMNOTES: %d\n", song->sfh->numNotes);
-	/*for loop to give the first  bars, then continue until done*/
-	/* i is the current note, j is the current bar*/
-	for(i=0, j=0; i < song->sfh->numNotes;i++, j++){
-		if (j == fbar->notes){
+	fbar_n = load_song(fbp, notes, song, x_s, fbar);
+
+	for(i=0, j=0, k=0;i < song->sfh->numNotes;i++, j++, notes++){
+
+		if( j == fbar->notes){
 			fbar++;
 			j = 0;
-			printf("fbar++\n");
+			if (fbar == fbar_n){
+				clear_all_notes(song, song->expected+k, fbp, k, i-k);
+				k = i;
+				fbar_n = load_song(fbp, notes, song, x_s, fbar);
+				break; /* This is only a test */
+			}
 		}
-		printf("i = %d\n",i);
-		//load song every 4 bars
+		//compare the notes here
 	}
 
 	/*writes the thing to a pnm hopefully --update: it does*/
