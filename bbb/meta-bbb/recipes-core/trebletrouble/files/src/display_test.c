@@ -98,13 +98,15 @@ int main(int argc, char** argv){
 	Testing the new Song format*/
 	Song * song;
 	song = malloc(sizeof(song));
-	Note * notes;
+	Note * notes, *notes_p;
 	
 	makeBin(SONG);
 	notes = readTwinkle(song,SONG);
-	Bar* fbar, * fbar_n;
+	Bar* fbar, * fbar_n, *fbar_p;
 	fbar = song->fbar;
 	int x_s = load_start_song(fbp, song);
+	fbar_p = fbar;
+	notes_p = notes;
 	fbar_n = load_song(fbp, notes, song, x_s, fbar);
 
 	for(i=0, j=0, k=0;i < song->sfh->numNotes;i++, j++, notes++){
@@ -113,7 +115,7 @@ int main(int argc, char** argv){
 			fbar++;
 			j = 0;
 			if (fbar == fbar_n){
-				clear_all_notes(song, song->expected+k, fbp, k, i-k);
+				clear_all_notes(notes_p, fbar_p, song->expected+k, fbp);
 				k = i;
 				fbar_n = load_song(fbp, notes, song, x_s, fbar);
 				break; /* This is only a test */

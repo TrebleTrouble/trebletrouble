@@ -2,7 +2,7 @@
 #include "fileFormat.h"
 
 #define NUMBAR 8
-#define NUMNOTES 28
+#define NUMNOTES 32
 
 void makeBin(char * filename)
 {
@@ -27,8 +27,8 @@ void makeBin(char * filename)
         allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
         allNotes[i].dotted = 0; 
 	i++;
-       	
-        allNotes[i].quantumvalue = CROTCHET; 
+        
+	allNotes[i].quantumvalue = CROTCHET; 
         allNotes[i].frequency =392.628; 
         allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
@@ -53,9 +53,15 @@ void makeBin(char * filename)
 	allNotes[i].dotted = 0; 
 	i++;
 
-	allNotes[i].quantumvalue = MINIM; 
+	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =415.305; 
-	allNotes[i].duration = millisec(sfh.bpm, ts, MINIM);
+	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
+	allNotes[i].dotted = 0; 
+	i++;
+
+	allNotes[i].quantumvalue = CROTCHET; 
+	allNotes[i].frequency =415.305; 
+	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
 
@@ -99,35 +105,41 @@ void makeBin(char * filename)
 	allNotes[i].dotted = 0; 
 	i++;
 
-	allNotes[i].quantumvalue = MINIM; 
+	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =261.626; 
-	allNotes[i].duration = millisec(sfh.bpm, ts, MINIM);
+	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
+	allNotes[i].dotted = 0; 
+	i++;
+	
+	allNotes[i].quantumvalue = CROTCHET; 
+	allNotes[i].frequency =261.626; 
+	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
 
 	//Fifth Bar - start over
 	allNotes[i].quantumvalue = CROTCHET; 
-    allNotes[i].frequency =392.628; 
-    allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
+	allNotes[i].frequency =392.628; 
+	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
                	
-    allNotes[i].quantumvalue = CROTCHET; 
-    allNotes[i].frequency =392.628; 
-    allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
-    allNotes[i].dotted = 0; 
+	allNotes[i].quantumvalue = CROTCHET; 
+	allNotes[i].frequency =392.628; 
+	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
+	allNotes[i].dotted = 0; 
 	i++;
 
 	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =261.626; 
-    allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
-    allNotes[i].dotted = 0; 
+	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
+	allNotes[i].dotted = 0; 
 	i++;
 
-    allNotes[i].quantumvalue = CROTCHET; 
-    allNotes[i].frequency =261.626; 
-    allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
-    allNotes[i].dotted = 0; 
+	allNotes[i].quantumvalue = CROTCHET; 
+	allNotes[i].frequency =261.626; 
+	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
+	allNotes[i].dotted = 0; 
 	i++;
         	
 	//Sixth Bar
@@ -143,14 +155,19 @@ void makeBin(char * filename)
 	allNotes[i].dotted = 0; 
 	i++;
 
-	allNotes[i].quantumvalue = MINIM; 
+	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =415.305; 
-	allNotes[i].duration = millisec(sfh.bpm, ts, MINIM);
+	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
+	allNotes[i].dotted = 0; 
+	i++;
+
+	allNotes[i].quantumvalue = CROTCHET; 
+	allNotes[i].frequency =415.305; 
+	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
 
 	//Seventh Bar
-
 	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =349.228; 
 	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
@@ -188,38 +205,50 @@ void makeBin(char * filename)
 	allNotes[i].dotted = 0; 
 	i++;
 
-	allNotes[i].quantumvalue = MINIM; 
+	allNotes[i].quantumvalue = CROTCHET; 
 	allNotes[i].frequency =261.626; 
-	allNotes[i].duration = millisec(sfh.bpm, ts, MINIM);
+	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
+	allNotes[i].dotted = 0; 
+	i++;
+
+	allNotes[i].quantumvalue = CROTCHET; 
+	allNotes[i].frequency =261.626; 
+	allNotes[i].duration = millisec(sfh.bpm, ts, CROTCHET);
 	allNotes[i].dotted = 0; 
 	i++;
 
 	//Keep the starting point of each note stored in a bar	
 	
 	allBars[j].notes =4;
-	j++;
-
-
-	allBars[j].notes =3;
+	allBars[j].barspace = 0;
 	j++;
 
 	allBars[j].notes =4;
-	j++;
-
-
-	allBars[j].notes =3;
+	allBars[j].barspace = 0;
 	j++;
 
 	allBars[j].notes =4;
-	j++;
-
-	allBars[j].notes =3;
+	allBars[j].barspace = 0;
 	j++;
 
 	allBars[j].notes =4;
+	allBars[j].barspace = 0;
 	j++;
 
-	allBars[j].notes =3;
+	allBars[j].notes =4;
+	allBars[j].barspace = 0;
+	j++;
+
+	allBars[j].notes =4;
+	allBars[j].barspace = 0;
+	j++;
+
+	allBars[j].notes =4;
+	allBars[j].barspace = 0;
+	j++;
+
+	allBars[j].notes =4;
+	allBars[j].barspace = 0;
 
 	/* Create the file */
 	FILE *fh = fopen (filename, "wb+");
