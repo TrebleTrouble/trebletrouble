@@ -44,7 +44,6 @@
 
 void play_song_menu(char* fbp, ScreenInput *si)
 {
-	/*FILE* songfile;*/
 	int i, j, k, m, *actuals, x_s;
 	float pitch;
 	Wave* wave;
@@ -65,7 +64,6 @@ void play_song_menu(char* fbp, ScreenInput *si)
 
 	fbar = song->fbar;
 	cp_pcmh = init_pcm(SAMPLE_RATE, 1);
-	pcmh = init_pcm(SAMPLE_RATE);
 	x_s = load_start_song(fbp, song->sfh->key, song->sfh->timeSignature);
 	fbar_p = fbar;
 	notes_p = notes;
@@ -95,8 +93,7 @@ void play_song_menu(char* fbp, ScreenInput *si)
 		wave = makeWave(notes->duration);
 		/* Change duration based on expected length of note */
 		/* Section: Audio Recording */
-		if (recordWAV(wave, notes[i].duration, cp_pcmh)) {
-		//if (recordWAV(wave, notes->duration)) {
+		if (recordWAV(wave, notes->duration, cp_pcmh)) {
 			printf("Oh no! An error with the mic!\n");
 			break;
 		}
@@ -109,6 +106,7 @@ void play_song_menu(char* fbp, ScreenInput *si)
 		printf("End compare notes\n");
 		j -= m;
 		i -= m;
+		notes -= m;
 		waveDestroy(wave);
 	}
 	worstBar = find_worst_bar(song, actuals);
