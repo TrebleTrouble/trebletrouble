@@ -60,6 +60,7 @@ GHandle ghButton1_1;
 GHandle ghButton1;
 GHandle ghLabel1;
 
+
 GHandle ghContainerFeedbackPage;
 GHandle ghProgressbar4;
 GHandle ghProgressbar1;
@@ -72,10 +73,21 @@ GHandle ghLabel3;
 GHandle ghLabel2;
 GHandle ghButton2;
 
+// GHandles
+GHandle ghContainerSongMenu;
+GHandle odeToJoy;
+GHandle ttlsButton;
+GHandle selectASong;
+
+
 // Fonts
 font_t dejavu_sans_16;
 font_t dejavu_sans_16_anti_aliased;
 font_t dejavu_sans_32;
+
+#define TWINKLE "/srv/trebletrouble/TwinkleTwinkleLittleStar.bin"
+#define ODETOJOY "/srv/trebletrouble/OdeToJoy.bin"
+
 
 static void createPageFeedbackPage(void)
 {
@@ -255,6 +267,67 @@ static void createPageFeedbackPage(void)
   ghButton2 = gwinButtonCreate(0, &wi);
 }
 
+static void createPageSongMenu(void)
+{
+	GWidgetInit wi;
+	gwinWidgetClearInit(&wi);
+
+
+	// create container widget: ghContainerSongMenu
+	wi.g.show = FALSE;
+	wi.g.x = 0;
+	wi.g.y = 0;
+	wi.g.width = 640;
+	wi.g.height = 480;
+	wi.g.parent = 0;
+	wi.text = "Container";
+	wi.customDraw = 0;
+	wi.customParam = 0;
+	wi.customStyle = 0;
+	ghContainerSongMenu = gwinContainerCreate(0, &wi, 0);
+
+	// create button widget: ttlsButton
+	wi.g.show = TRUE;
+	wi.g.x = 200;
+	wi.g.y = 260;
+	wi.g.width = 600;
+	wi.g.height = 75;
+	wi.g.parent = ghContainerSongMenu;
+	wi.text = "Twinkle Twinkle Little Star";
+	wi.customDraw = gwinButtonDraw_Rounded;
+	wi.customParam = 0;
+	wi.customStyle = 0;
+	ttlsButton = gwinButtonCreate(0, &wi);
+
+	// create button widget: odeToJoy
+	wi.g.show = TRUE;
+	wi.g.x = 200;
+	wi.g.y = 150;
+	wi.g.width = 600;
+	wi.g.height = 75;
+	wi.g.parent = ghContainerSongMenu;
+	wi.text = "Ode to Joy";
+	wi.customDraw = gwinButtonDraw_Rounded;
+	wi.customParam = 0;
+	wi.customStyle = 0;
+	odeToJoy = gwinButtonCreate(0, &wi);
+
+	// Create label widget: selectASong
+	wi.g.show = TRUE;
+	wi.g.x = 200;
+	wi.g.y = 40;
+	wi.g.width = 600;
+	wi.g.height = 75;
+	wi.g.parent = ghContainerSongMenu;
+	wi.text = "Select A Song";
+	wi.customDraw = gwinLabelDrawJustifiedLeft;
+	wi.customParam = 0;
+	wi.customStyle = 0;
+	selectASong = gwinLabelCreate(0, &wi);
+	gwinLabelSetBorder(selectASong, FALSE);
+}
+
+
 static void createPagePage0(void)
 {
 	GWidgetInit wi;
@@ -385,7 +458,7 @@ void guiCreate(void)
 	// Create all the display pages
 	createPagePage0();
 	createPageFeedbackPage();
-
+	createPageSongMenu();
 	// Select the default display page
 	colour_screen(GDISP->board, WHITE);
 	guiShowPage(0);
@@ -395,7 +468,6 @@ void guiCreate(void)
 void guiEventLoop(void)
 {
 	GEvent* pe;
-	void (*menu_item)(char* fbp, ScreenInput *si);
 	char* fbp = GDISP->board;
 
 	while (1) {
@@ -405,23 +477,36 @@ void guiEventLoop(void)
 			continue;
 		switch (pe->type) {
 		case GEVENT_GWIN_BUTTON:
+
 		  gwinHide(ghContainerPage0);
 		  gwinHide(ghContainerFeedbackPage);
-		  	if (((GEventGWinButton*)pe)->gwin == ghButton1) {
-				menu_item = play_song_menu;
-				menu_item(fbp, NULL);
-				gwinShow(ghContainerFeedbackPage);
+		
+
+			if (((GEventGWinButton*)pe)->gwin == ghButton1) {
+				gwinHide(ghContainerPage0);
+				gwinShow(ghContainerSongMenu);
+				break;
 			} else if (((GEventGWinButton*)pe)->gwin == ghButton1_1) {
-				menu_item = metronome_menu;
-				menu_item(fbp, NULL);
-			} else if (((GEventGWinButton*)pe)->gwin == ghButton2) {
-			  	gwinShow(ghContainerPage0);
+				metronome_menu(fbp,NULL);
+				break;
+			} else if (((GEventGWinButton*)pe)->gwin == ghButton2){
+				gwinShow(ghContainerPage0);
+			} else if (((GEventGWinButton*)pe)->gwin == ttlsButton){
+				gwinHide(ghContainerSongMenu);
+				play_song_menu(fbp,NULL,TWINKLE);
+				gwinShow(ghContainerFeedbackPage);
+				break;
+			} else if (((GEventGWinButton*)pe)->gwin == odeToJoy){
+				gwinHide(ghContainerSongMenu);
+				play_song_menu(fbp,NULL,ODETOJOY);
+				gwinShow(ghContainerFeedbackPage);
+				break;
 			} else {
-			  	gwinShow(ghContainerPage0);
+			  	break;
 			}
+			gwinShow(ghContainerPage0);
 			break;
-		default:
-			break;
+
 		}
 	}
 }

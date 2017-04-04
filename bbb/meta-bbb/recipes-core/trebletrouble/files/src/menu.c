@@ -42,7 +42,7 @@
 #include "find_freq.h"
 #define SONG "/srv/trebletrouble/TwinkleTwinkleLittleStar.bin"
 
-void play_song_menu(char* fbp, ScreenInput *si)
+void play_song_menu(char* fbp, ScreenInput *si,char * songdir)
 {
 	int i, j, k, m, *actuals, x_s;
 	float pitch;
@@ -60,15 +60,14 @@ void play_song_menu(char* fbp, ScreenInput *si)
 	/*Code for new song format*/
 	song = malloc(sizeof(Song));
 	
-	notes = readTwinkle(song, SONG);
 
+	notes = readTwinkle(song, songdir);
 	fbar = song->fbar;
 	cp_pcmh = init_pcm(SAMPLE_RATE, 1);
 	x_s = load_start_song(fbp, song->sfh->key, song->sfh->timeSignature);
 	fbar_p = fbar;
 	notes_p = notes;
 	fbar_n = load_song(fbp, notes, song, x_s, fbar);
-
 	actuals = malloc(sizeof(int) * song->sfh->numNotes);
 	firstNote = song->fbar + song->sfh->numBars;
 
