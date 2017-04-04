@@ -61,14 +61,7 @@ GHandle ghButton1;
 GHandle ghLabel1;
 
 GHandle ghContainerFeedbackPage;
-GHandle ghProgressbar4;
 GHandle ghProgressbar1;
-GHandle ghProgressbar2;
-GHandle ghProgressbar3;
-GHandle ghLabel6;
-GHandle ghLabel5;
-GHandle ghLabel4;
-GHandle ghLabel3;
 GHandle ghLabel2;
 GHandle ghButton2;
 
@@ -77,11 +70,20 @@ font_t dejavu_sans_16;
 font_t dejavu_sans_16_anti_aliased;
 font_t dejavu_sans_32;
 
+void setProgressBar(int numIncrements) {
+  int i;
+
+  gfxInit();
+
+  for (i = 0; i < numIncrements; i++) {
+    gwinProgressbarIncrement(ghProgressbar1);
+  }
+}
+
 static void createPageFeedbackPage(void)
 {
   GWidgetInit wi;
   gwinWidgetClearInit(&wi);
-
 
   // create container widget: ghContainerFeedbackPage
   wi.g.show = FALSE;
@@ -109,26 +111,11 @@ static void createPageFeedbackPage(void)
   wi.customStyle = 0;
   ghContainer1 = gwinContainerCreate(0, &wi, GWIN_CONTAINER_BORDER);
 
-  // Create progressbar widget: ghProgressbar4
-  wi.g.show = TRUE;
-  wi.g.x = 30;
-  wi.g.y = 240;
-  wi.g.width = 200;
-  wi.g.height = 20;
-  wi.g.parent = ghContainer1;
-  wi.text = "% Correct";
-  wi.customDraw = gwinProgressbarDraw_Std;
-  wi.customParam = 0;
-  wi.customStyle = 0;
-  ghProgressbar4 = gwinProgressbarCreate(0, &wi);
-  gwinProgressbarSetRange(ghProgressbar4, 0, 100);
-  gwinProgressbarSetPosition(ghProgressbar4, 25);
-
   // Create progressbar widget: ghProgressbar1
   wi.g.show = TRUE;
   wi.g.x = 30;
   wi.g.y = 60;
-  wi.g.width = 200;
+  wi.g.width = 350;
   wi.g.height = 20;
   wi.g.parent = ghContainer1;
   wi.text = "% Correct";
@@ -138,52 +125,6 @@ static void createPageFeedbackPage(void)
   ghProgressbar1 = gwinProgressbarCreate(0, &wi);
   gwinProgressbarSetRange(ghProgressbar1, 0, 100);
   gwinProgressbarSetPosition(ghProgressbar1, 25);
-
-  // Create progressbar widget: ghProgressbar2
-  wi.g.show = TRUE;
-  wi.g.x = 30;
-  wi.g.y = 120;
-  wi.g.width = 200;
-  wi.g.height = 20;
-  wi.g.parent = ghContainer1;
-  wi.text = "% Correct";
-  wi.customDraw = gwinProgressbarDraw_Std;
-  wi.customParam = 0;
-  wi.customStyle = 0;
-  ghProgressbar2 = gwinProgressbarCreate(0, &wi);
-  gwinProgressbarSetRange(ghProgressbar2, 0, 100);
-  gwinProgressbarSetPosition(ghProgressbar2, 25);
-
-  // Create progressbar widget: ghProgressbar3
-  wi.g.show = TRUE;
-  wi.g.x = 30;
-  wi.g.y = 180;
-  wi.g.width = 200;
-  wi.g.height = 20;
-  wi.g.parent = ghContainer1;
-  wi.text = "% Correct";
-  wi.customDraw = gwinProgressbarDraw_Std;
-  wi.customParam = 0;
-  wi.customStyle = 0;
-  ghProgressbar3 = gwinProgressbarCreate(0, &wi);
-  gwinProgressbarSetRange(ghProgressbar3, 0, 100);
-  gwinProgressbarSetPosition(ghProgressbar3, 25);
-
-  // Create label widget: ghLabel1
-  wi.g.show = TRUE;
-  wi.g.x = 50;
-  wi.g.y = 70;
-  wi.g.width = 180;
-  wi.g.height = 32;
-  wi.g.parent = ghContainerFeedbackPage;
-  wi.text = "Feedback";
-  wi.customDraw = gwinLabelDrawJustifiedLeft;
-  wi.customParam = 0;
-  wi.customStyle = 0;
-  ghLabel1 = gwinLabelCreate(0, &wi);
-  gwinLabelSetBorder(ghLabel1, FALSE);
-  gwinSetFont(ghLabel1, dejavu_sans_32);
-  gwinRedraw(ghLabel1);
 
   // Create label widget: ghLabel2
   wi.g.show = TRUE;
@@ -198,48 +139,6 @@ static void createPageFeedbackPage(void)
   wi.customStyle = 0;
   ghLabel2 = gwinLabelCreate(0, &wi);
   gwinLabelSetBorder(ghLabel2, FALSE);
-
-  // Create label widget: ghLabel3
-  wi.g.show = TRUE;
-  wi.g.x = 30;
-  wi.g.y = 100;
-  wi.g.width = 120;
-  wi.g.height = 20;
-  wi.g.parent = ghContainer1;
-  wi.text = "Bar2";
-  wi.customDraw = gwinLabelDrawJustifiedLeft;
-  wi.customParam = 0;
-  wi.customStyle = 0;
-  ghLabel3 = gwinLabelCreate(0, &wi);
-  gwinLabelSetBorder(ghLabel3, FALSE);
-
-  // Create label widget: ghLabel4
-  wi.g.show = TRUE;
-  wi.g.x = 30;
-  wi.g.y = 160;
-  wi.g.width = 120;
-  wi.g.height = 20;
-  wi.g.parent = ghContainer1;
-  wi.text = "Bar3";
-  wi.customDraw = gwinLabelDrawJustifiedLeft;
-  wi.customParam = 0;
-  wi.customStyle = 0;
-  ghLabel4 = gwinLabelCreate(0, &wi);
-  gwinLabelSetBorder(ghLabel4, FALSE);
-
-  // Create label widget: ghLabel5
-  wi.g.show = TRUE;
-  wi.g.x = 30;
-  wi.g.y = 220;
-  wi.g.width = 120;
-  wi.g.height = 20;
-  wi.g.parent = ghContainer1;
-  wi.text = "Bar4";
-  wi.customDraw = gwinLabelDrawJustifiedLeft;
-  wi.customParam = 0;
-  wi.customStyle = 0;
-  ghLabel5 = gwinLabelCreate(0, &wi);
-  gwinLabelSetBorder(ghLabel5, FALSE);
 
   // create button widget: ghButton1
   wi.g.show = TRUE;

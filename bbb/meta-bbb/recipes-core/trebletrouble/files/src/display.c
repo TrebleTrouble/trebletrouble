@@ -431,6 +431,7 @@ int compare_notes(Song* song, Note* note, int* actuals, int i, int j, int m, cha
 	return notes_back;
 }
 
+
 Bar* find_worst_bar(Song* song, int* actuals) {
 
   int i, *numWrongNotes, j;

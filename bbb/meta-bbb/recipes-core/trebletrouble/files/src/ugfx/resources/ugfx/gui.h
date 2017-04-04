@@ -37,6 +37,7 @@ extern GHandle ghTextedit1;
 void guiCreate(void);
 void guiShowPage(unsigned pageIndex);
 void guiEventLoop(void);
+void setProgressBar(int numIncrements);
 
 #endif /* _GUI_H_ */
 

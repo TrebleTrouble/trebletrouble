@@ -40,11 +40,12 @@
 #include "metronome.h"
 #include "alsa.h"
 #include "find_freq.h"
+#include "gui.h"
 #define SONG "/srv/trebletrouble/TwinkleTwinkleLittleStar.bin"
 
 void play_song_menu(char* fbp, ScreenInput *si)
 {
-	int i, j, k, m, *actuals, x_s;
+	int i, j, k, m, *actuals, x_s, numIncrements;
 	float pitch;
 	Wave* wave;
 	snd_pcm_t *cp_pcmh;
@@ -71,6 +72,7 @@ void play_song_menu(char* fbp, ScreenInput *si)
 
 	actuals = malloc(sizeof(int) * song->sfh->numNotes);
 	firstNote = song->fbar + song->sfh->numBars;
+	numIncrements = 0;
 
 	for (i = 0, j=0, k=0; k+i < song->sfh->numNotes; i++, j++, notes++) {
 		if ( j == fbar->notes){
@@ -102,6 +104,10 @@ void play_song_menu(char* fbp, ScreenInput *si)
 		printf("Recognized pitch %f\n", pitch);
 		/* need to store the found freqs in actuals or something */
 		actuals[k+i] = find_freq(pitch);
+		int expected = song->expected + i;
+		if (actuals[i] == expected) {
+			numIncrements++;
+		}
 		m = compare_notes(song, notes, actuals, k+i, j,i, fbp, fbar->barspace);
 		printf("End compare notes\n");
 		j -= m;
@@ -111,6 +117,7 @@ void play_song_menu(char* fbp, ScreenInput *si)
 	}
 	worstBar = find_worst_bar(song, actuals);
 	cleanup_pcm(cp_pcmh);
+	setProgressBar(numIncrements);
 	sleep(10);
 
 	/* Reset notes to black */

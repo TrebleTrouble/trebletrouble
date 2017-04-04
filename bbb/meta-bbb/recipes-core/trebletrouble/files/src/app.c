@@ -36,6 +36,7 @@
 
 int main(int argc, char** argv) {
 	/* int sifd; */
+  	Glistener glistener;
 
 	gfxInit();
 
