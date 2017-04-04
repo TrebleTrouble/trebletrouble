@@ -62,6 +62,7 @@ void play_song_menu(char* fbp, ScreenInput *si,char * songdir)
 	
 
 	notes = readTwinkle(song, songdir);
+
 	fbar = song->fbar;
 	cp_pcmh = init_pcm(SAMPLE_RATE, 1);
 	x_s = load_start_song(fbp, song->sfh->key, song->sfh->timeSignature);
