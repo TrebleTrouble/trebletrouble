@@ -77,6 +77,7 @@ GHandle ghButton2;
 GHandle ghContainerSongMenu;
 GHandle odeToJoy;
 GHandle ttlsButton;
+GHandle yankADoodle;
 GHandle selectASong;
 
 
@@ -87,6 +88,7 @@ font_t dejavu_sans_32;
 
 #define TWINKLE "/srv/trebletrouble/TwinkleTwinkleLittleStar.bin"
 #define ODETOJOY "/srv/trebletrouble/OdeToJoy.bin"
+#define YANKADOODLE "/srv/trebletrouble/YankADoodle.bin"
 
 
 static void createPageFeedbackPage(void)
@@ -312,6 +314,20 @@ static void createPageSongMenu(void)
 	wi.customStyle = 0;
 	odeToJoy = gwinButtonCreate(0, &wi);
 
+	// create button widget: yankADoodle
+	wi.g.show = TRUE;
+	wi.g.x = 200;
+	wi.g.y = 370;
+	wi.g.width = 600;
+	wi.g.height = 75;
+	wi.g.parent = ghContainerSongMenu;
+	wi.text = "Yank A Doodle";
+	wi.customDraw = gwinButtonDraw_Rounded;
+	wi.customParam = 0;
+	wi.customStyle = 0;
+	yankADoodle = gwinButtonCreate(0, &wi);
+
+
 	// Create label widget: selectASong
 	wi.g.show = TRUE;
 	wi.g.x = 200;
@@ -496,7 +512,14 @@ void guiEventLoop(void)
 				play_song_menu(fbp,NULL,TWINKLE);
 				gwinShow(ghContainerFeedbackPage);
 				break;
-			} else if (((GEventGWinButton*)pe)->gwin == odeToJoy){
+			} 
+			  else if (((GEventGWinButton*)pe)->gwin == yankADoodle){
+				gwinHide(ghContainerSongMenu);
+				play_song_menu(fbp,NULL,YANKADOODLE);
+				gwinShow(ghContainerFeedbackPage);
+				break;
+			}
+			  else if (((GEventGWinButton*)pe)->gwin == odeToJoy){
 				gwinHide(ghContainerSongMenu);
 				play_song_menu(fbp,NULL,ODETOJOY);
 				gwinShow(ghContainerFeedbackPage);
